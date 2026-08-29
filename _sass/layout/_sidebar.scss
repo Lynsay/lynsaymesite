@@ -1,0 +1,302 @@
+/* ==========================================================================
+   SIDEBAR
+   ========================================================================== */
+
+/*
+   Default
+   ========================================================================== */
+
+.sidebar {
+  -webkit-transform: translate3d(0, 0 , 0);
+          transform: translate3d(0, 0 , 0);
+
+  @include clearfix();
+  margin-bottom: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+
+  @media (orientation: portrait) {
+    margin-top: 1em;
+  }
+
+  /* Extra height for the purple bar in its "folded up" stacked state: 60px
+     top and bottom (rather than 120px on one side) so the content
+     (avatar/name/bio/"Links" button) sits centred within that added
+     height by construction, instead of needing flex/align-items to
+     redistribute it after the fact (padding doesn't factor into a flex
+     container's own auto-height, so that approach left it flush at the
+     top with all 120px stranded below it - verified live). */
+  @media screen and (max-width: 924px) {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  /* The sidebar stays a plain full-width stacked block right up until this
+     breakpoint, where it becomes the pinned left rail (position: fixed,
+     constant width) - matching the masthead/#main/.page offset, which all
+     switch at this same $sidebar-screen-min-width. It used to switch to a
+     narrow floated 2-of-12 column at the smaller susy $large breakpoint
+     instead, leaving an awkward ~100px band (925-1023px) where it was
+     neither the full-width stacked layout nor the pinned rail. */
+  @media screen and (min-width: $sidebar-screen-min-width) {
+    height: 100vh;
+    overflow-y: auto;               // Add scrollbar if the sidebar is too long
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: $sidebar-link-max-width;
+    padding-top: $masthead-height;
+  }
+
+  @include breakpoint($x-large) {
+    max-width: $sidebar-link-max-width;
+    padding-right: 0;
+  }
+
+  h2, h3, h4, h5, h6 {
+    margin-bottom: 0;
+    font-family: $sans-serif-narrow;
+  }
+
+  h3, h4 {
+    font-size: $type-size-5;
+  }
+
+  p, li {
+    font-family: $sans-serif;
+    font-size: $type-size-6;
+    line-height: 1.5;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+.sidebar__right {
+  margin-bottom: 1em;
+
+  @include breakpoint($large) {
+    position: relative;
+    float: right;
+    width: $right-sidebar-width-narrow;
+    margin-left: span(0.5 of 12);
+    z-index: 10;
+  }
+
+  @include breakpoint($x-large) {
+    width: $right-sidebar-width;
+  }
+}
+
+/*
+   Author profile and links
+   ========================================================================== */
+
+.author__container {
+  /* Below this breakpoint, avatar/name/"Links" button lay out as
+     table-cells in a row (see .author__avatar/.author__content/
+     .author__urls-wrapper below); flexing the row lets the button be
+     pushed to the far right via margin-left: auto below, regardless of
+     how much space the avatar/name take up. At $large and up, the
+     children switch to display: block and stack vertically instead, so
+     this is scoped to not interfere with that. */
+  @media screen and (max-width: 924px) {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.author__avatar {
+  display: table-cell;
+  vertical-align: top;
+  width: 36px;
+  // set width only, for non-square avatars
+  // height: 36px;
+
+  @include breakpoint($large) {
+    display: block;
+    width: auto;
+    height: auto;
+  }
+
+  img {
+    max-width: 175px;
+    border-radius: 50%;
+
+    @include breakpoint($large) {
+      padding: 5px;
+      border: 1px solid var(--global-border-color);
+    }
+  }
+}
+
+.author__content {
+  display: table-cell;
+  vertical-align: top;
+  padding-left: 15px;
+  padding-right: 25px;
+  line-height: 1;
+
+  @include breakpoint($large) {
+    display: block;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.author__name {
+  margin: 0;
+
+  @include breakpoint($large) {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+.sidebar .author__name {
+  font-family: $sans-serif;
+  /* Match .page__title's rendered size: that h1 is $type-size-3 inside
+     .page__inner-wrap/.archive, which are scaled to 0.85em (see
+     assets/css/lynsay.css); .author__name isn't inside that 0.85em
+     context, so the same factor is applied directly here instead. */
+  font-size: $type-size-3 * 0.85;
+}
+
+.sidebar .author__desktop {
+  display: none;
+  @media screen and (min-width: 1024px) {
+    display: block;
+  }
+}
+
+.author__pronouns {
+  margin: 0;
+
+  @include breakpoint($large) {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+.author__bio {
+  margin: 0;
+
+  @include breakpoint($large) {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+}
+
+.author__urls-wrapper {
+  position: relative;
+  display: table-cell;
+  vertical-align: middle;
+  font-family: $sans-serif;
+  z-index: 10;
+  position: relative;
+  cursor: pointer;
+
+  li:last-child {
+    a {
+      margin-bottom: 0;
+    }
+  }
+
+  /* Push the "Links" button to the right edge of the purple sidebar bar,
+     as a flex item in .author__container's row (see above), rather than
+     sitting immediately after the name/bio text. */
+  @media screen and (max-width: 924px) {
+    margin-left: auto;
+  }
+
+  @include breakpoint($large) {
+    display: block;
+  }
+
+  button {
+    margin-bottom: 0;
+
+    @include breakpoint($large) {
+      display: none;
+    }
+  }
+}
+
+.author__urls {
+  display: none;
+  position: absolute;
+  right: 0;
+  margin-top: 15px;
+  padding: 10px;
+  list-style-type: none;
+  border: 1px solid var(--global-border-color);
+  border-radius: $border-radius;
+  background: var(--global-bg-color);
+  z-index: -1;
+  box-shadow: 0 0 10px rgba(#000, 0.25);
+  cursor: default;
+
+  @include breakpoint($large) {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  &:before {
+    display: block;
+    content: "";
+    position: absolute;
+    top: -11px;
+    left: calc(50% - 10px);
+    width: 0;
+    border-style: solid;
+    border-width: 0 10px 10px;
+    border-color: var(--global-border-color) transparent;
+    z-index: 0;
+
+    @include breakpoint($large) {
+      display: none;
+    }
+  }
+
+  &:after {
+    display: block;
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: calc(50% - 10px);
+    width: 0;
+    border-style: solid;
+    border-width: 0 10px 10px;
+    border-color: #fff transparent;
+    z-index: 1;
+
+    @include breakpoint($large) {
+      display: none;
+    }
+  }
+
+  li {
+    white-space: nowrap;
+  }
+
+  a {
+    display: block;
+    margin-bottom: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    color: inherit;
+    font-size: $type-size-5;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

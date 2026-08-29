@@ -1,0 +1,155 @@
+/* -------------------------------------------------------------------------------- */
+/*	Lynsay Mods
+/* -------------------------------------------------------------------------------- */
+/*modify the badges for publications*/
+/*----------------------------------*/
+.badge {font-weight:500;
+	padding:0.3em;
+	font-size: 0.78rem;
+	}
+  /*conferences*/
+  .badge-conf{background-color: #226E69;
+    color:#ffffff;
+    margin-bottom:1em;
+    border-radius: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  
+  .badge-journal{background-color:#B13C63;
+    color:#ffffff;
+    margin-bottom:1em;
+    border-radius: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  
+  .badge-other{background-color:#6d4e99;
+    color:#ffffff;
+    margin-bottom:1em;
+    border-radius: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+    .badge-report{background-color:#3E5CB2;
+    color:#ffffff;
+    margin-bottom:1em;
+    border-radius: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+    .badge-software{background-color:#A85A00;
+    color:#ffffff;
+    margin-bottom:1em;
+    border-radius: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  
+  a {
+    --global-link-color: #3E5CB2;
+}
+
+/* Targets only the dl with the dl-news class */
+.dl-news {
+  display: grid;
+  grid-template-columns: max-content 1fr; /* Date fits its content, text takes the rest */
+  column-gap: 20px;     /* Space between date and text */
+  row-gap: 10px;        /* Space between different news items */
+  align-items: baseline; /* Ensures text stays aligned if fonts are different sizes */
+}
+
+/* Style the Date */
+.dl-news dt {
+  font-weight: bold;
+  grid-column: 1;       /* Force onto the first column */
+}
+
+/* Style the Description */
+.dl-news dd {
+  grid-column: 2;       /* Force onto the second column */
+  margin: 0;
+  font-size:1em;           /* Removes default browser indentation */
+}
+
+.dl-news {
+    display: block; /* Reset just in case */
+}
+
+.sidebar p{
+    font-size:0.85em;
+}
+
+/* Sidebar colours: purple background with white text/links/icons.
+   Icons inherit colour from their surrounding link/text (currentColor),
+   so colouring the sidebar and its links white is enough to cover them too. */
+.sidebar{
+    background-color:#6d4e99;
+    color:#fff;
+}
+
+.sidebar a,
+.sidebar a:visited,
+.sidebar a:hover,
+.sidebar a:focus{
+    color:#fff;
+}
+
+/* .social-icons gives ORCID, Bluesky and LinkedIn their own brand colours
+   (higher specificity than .sidebar a above), which stand out against the
+   purple background instead of matching the other white icons. Override
+   just these three back to white. */
+.sidebar .social-icons .fa-bluesky,
+.sidebar .social-icons .fa-bluesky-square,
+.sidebar .social-icons .fa-linkedin,
+.sidebar .social-icons .fa-linkedin-square,
+.sidebar .social-icons .ai-orcid,
+.sidebar .social-icons .ai-orcid-square{
+    color:#fff;
+}
+
+/* Below the $large breakpoint the "Follow" popup (.author__urls) has its
+   own opaque light background + white pointer tip, independent of .sidebar's
+   background. Match it to the sidebar purple so the white text stays legible. */
+.sidebar .author__urls{
+    background-color:#6d4e99;
+}
+
+/* Keep the "Links" toggle button a constant dark background with white
+   text in every state - .btn--inverse's own default (light grey text on
+   a near-white background) and :hover (white text, dark background, both
+   !important) otherwise make it look like it only turns dark on click. */
+.author__urls-wrapper .btn.btn--inverse,
+.author__urls-wrapper .btn.btn--inverse:hover,
+.author__urls-wrapper .btn.btn--inverse:focus,
+.author__urls-wrapper .btn.btn--inverse:active{
+    background-color:#000 !important;
+    border-color:#000 !important;
+    color:#fff !important;
+}
+
+.sidebar .author__urls:after{
+    border-color:#6d4e99 transparent;
+}
+
+/* Main nav underline (hover + active page) in the sidebar's purple,
+   replacing the theme's default grey. The show/hide logic itself
+   (scaleX transform on hover/[aria-current="page"]) lives in
+   _sass/layout/_navigation.scss - this only overrides the colour. */
+.greedy-nav .visible-links a:before{
+    background-color:#6d4e99;
+}
+
+/* Scale main page content (headings, paragraphs, lists) down to match
+   the sidebar's 0.85em text size. Headings use relative em units in the
+   theme, so they shrink proportionately along with body text.
+   .page__inner-wrap covers single-page/post layouts (About, individual
+   publications/talks, blog posts); .archive covers the "archive" layout
+   used by listing pages like Research, Publications, Talks, Teaching,
+   Service, Outreach and Portfolio. */
+.page__inner-wrap,
+.archive{
+    font-size:0.85em;
+}
