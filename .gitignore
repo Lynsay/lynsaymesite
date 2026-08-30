@@ -13,7 +13,7 @@ node_modules
 package-lock.json
 
 # Ignore the vendor file at root level and bundle for alternative installation
-/vendor/
+/vendor/bundle
 .bundle/
 
 # Ignore folders related to IDEs
